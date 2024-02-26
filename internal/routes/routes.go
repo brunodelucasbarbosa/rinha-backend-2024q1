@@ -42,11 +42,18 @@ func StartRoutes(s services.ITransactionsService) {
 	})
 
 	r.GET("/clientes/:id/extrato", func(c *gin.Context) {
-		//id := c.Param("id")
+		id, _ := strconv.Atoi(c.Param("id"))
 
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
+		res, err := s.GetExtract(id)
+
+		if err != nil {
+			c.JSON(err.Code, gin.H{
+				"error": err.Message,
+			})
+			return
+		}
+
+		c.JSON(200, res)
 	})
 
 	r.Run(":8080")
