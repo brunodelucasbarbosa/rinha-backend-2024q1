@@ -6,7 +6,7 @@ import (
 	"github.com/brunodelucasbarbosa/rinha-backend-2024q1/internal/routes/request"
 )
 
-func (c clientRepository) CreateCredit(transaction request.TransactionRequest) {
+func (c clientRepository) createCredit(transaction request.TransactionRequest) {
 
 	_, err := c.db.MustExec(`
 		INSERT INTO

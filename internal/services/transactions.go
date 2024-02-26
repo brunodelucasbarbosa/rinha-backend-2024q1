@@ -31,13 +31,7 @@ func (ts TransactionsService) CreateTransaction(transaction request.TransactionR
 		return response.TransactionResponse{}, &errorapp.Error{Code: 404, Message: "client not found"}
 	}
 
-	if transaction.Type == "c" {
-		ts.repository.CreateCredit(transaction)
-	}
-
-	_ = ts.repository.GetBalance(transaction.ClientId)
-
-	return response.TransactionResponse{}, nil
+	return ts.repository.CreateTransaction(transaction)
 }
 
 func (ts TransactionsService) GetExtract(clientId int) (response.ExtractResponse, *errorapp.Error) {
