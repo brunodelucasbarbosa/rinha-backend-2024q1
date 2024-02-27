@@ -1,10 +1,12 @@
 package config
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
+	"github.com/sirupsen/logrus"
 )
 
 type DatabaseCredentials struct {
@@ -16,18 +18,20 @@ type DatabaseCredentials struct {
 }
 
 func ConnectDatabase(e DatabaseCredentials) *sqlx.DB {
+	logrus.Info("Connecting to database... : ", e.ConnectionString())
 	conn, err := sqlx.Open("postgres", e.ConnectionString())
+
 	if err != nil {
-		panic(err)
+		panic(errors.New("Error connecting to database: " + err.Error()))
 	}
 
 	err = conn.Ping()
 	if err != nil {
-		panic(err)
+		panic(errors.New("Error pinging database: " + err.Error()))
 	}
 	return conn
 }
 
 func (db DatabaseCredentials) ConnectionString() string {
-	return fmt.Sprintf("user=%s password=%s port=%s database=%s sslmode=disable", db.User, db.Password, db.Port, db.Database)
+	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", db.Server, db.Port, db.User, db.Password, db.Database)
 }

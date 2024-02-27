@@ -17,7 +17,9 @@ type Transactions struct {
 
 func ToExtractResponse(t []Transactions) response.ExtractResponse {
 	lastTransactions := []response.Transaction{}
-
+	if len(t) == 0 {
+		return response.ExtractResponse{}
+	}
 	for i, v := range t {
 		if i == 10 {
 			break

@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
+	"github.com/sirupsen/logrus"
 )
 
 type EnvConfig struct {
@@ -27,6 +28,6 @@ func LoadEnvsConfigs() EnvConfig {
 func loadEnvs() {
 	err := godotenv.Load(".env")
 	if err != nil {
-		panic(".env file not found")
+		logrus.Error("Error loading .env file: ", err.Error())
 	}
 }
