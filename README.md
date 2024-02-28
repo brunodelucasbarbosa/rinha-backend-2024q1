@@ -22,3 +22,5 @@ Repositório contendo(ou não) o projeto da Rinha de Back-end 2024.q1
 
 # Contato
 Bruno de Lucas - brunnobarbosas@gmail.com
+
+
