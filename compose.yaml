@@ -3,7 +3,9 @@ version: '3.5'
 services:
   api01: &api
     hostname: api01
-    image: brunodelucasbarbosa/rinhabackendq2024q1
+    #image: brunodelucasbarbosa/rinhabackendq2024q1
+    build:
+      context: .
     environment:
       - DB_SERVER=db
       - DB_USER=admin
@@ -58,6 +60,7 @@ services:
       - api02
     ports:
       - "9999:9999"
+    restart: always
     deploy:
       resources:
         limits:
@@ -65,5 +68,6 @@ services:
           memory: "10MB"
 
 networks:
-  rinha:
+  default:
     driver: bridge
+    name: rinha

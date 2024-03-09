@@ -4,7 +4,6 @@ import (
 	"time"
 
 	"github.com/brunodelucasbarbosa/rinha-backend-2024q1/internal/routes/response"
-	"github.com/sirupsen/logrus"
 )
 
 type Transactions struct {
@@ -31,7 +30,6 @@ func ToExtractResponse(t []Transactions) response.ExtractResponse {
 			RealizedIn:  v.CreatedAt,
 		})
 	}
-	logrus.Infof("lastTransactions: %#v", lastTransactions)
 	return response.ExtractResponse{
 		Amount: response.Amount{
 			Total: GetBalance(t),

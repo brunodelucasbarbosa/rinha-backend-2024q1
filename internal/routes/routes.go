@@ -7,18 +7,10 @@ import (
 	"github.com/brunodelucasbarbosa/rinha-backend-2024q1/internal/services"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
-	"github.com/sirupsen/logrus"
 )
 
-func StartRoutes(s services.ITransactionsService) {
-	logrus.Info("Routes started")
+func StartRoutes(s services.TransactionsService) {
 	r := gin.Default()
-
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
 
 	r.POST("/clientes/:id/transacoes", func(c *gin.Context) {
 		id, _ := strconv.Atoi(c.Param("id"))

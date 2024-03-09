@@ -7,17 +7,8 @@ import (
 	"github.com/brunodelucasbarbosa/rinha-backend-2024q1/internal/routes/response"
 )
 
-type ITransactionsService interface {
-	CreateTransaction(transaction request.TransactionRequest) (response.TransactionResponse, *errorapp.Error)
-	GetExtract(clientId int) (response.ExtractResponse, *errorapp.Error)
-}
-
 type TransactionsService struct {
-	repository repository.IClientRepository
-}
-
-func NewTransactionsService(r repository.IClientRepository) ITransactionsService {
-	return TransactionsService{r}
+	Repository repository.ClientRepository
 }
 
 func (ts TransactionsService) CreateTransaction(transaction request.TransactionRequest) (response.TransactionResponse, *errorapp.Error) {
@@ -26,19 +17,19 @@ func (ts TransactionsService) CreateTransaction(transaction request.TransactionR
 		return response.TransactionResponse{}, error
 	}
 
-	exists := ts.repository.ClientExists(transaction.ClientId)
+	exists := ts.Repository.ClientExists(transaction.ClientId)
 	if !exists {
 		return response.TransactionResponse{}, &errorapp.Error{Code: 404, Message: "client not found"}
 	}
 
-	return ts.repository.CreateTransaction(transaction)
+	return ts.Repository.CreateTransaction(transaction)
 }
 
 func (ts TransactionsService) GetExtract(clientId int) (response.ExtractResponse, *errorapp.Error) {
-	exists := ts.repository.ClientExists(clientId)
+	exists := ts.Repository.ClientExists(clientId)
 	if !exists {
 		return response.ExtractResponse{}, &errorapp.Error{Code: 404, Message: "client not found"}
 	}
 
-	return ts.repository.GetExtractByClientId(clientId), nil
+	return ts.Repository.GetExtractByClientId(clientId), nil
 }

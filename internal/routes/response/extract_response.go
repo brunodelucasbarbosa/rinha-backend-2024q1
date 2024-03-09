@@ -4,7 +4,7 @@ import "time"
 
 //ExtractResponse contem as ultimas 10 transacoes
 type ExtractResponse struct {
-	Amount           Amount        `json:"amount"`
+	Amount           Amount        `json:"saldo"`
 	LastTransactions []Transaction `json:"ultimas_transacoes"`
 }
 
